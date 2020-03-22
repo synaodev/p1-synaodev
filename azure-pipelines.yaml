@@ -69,11 +69,11 @@ stages:
           - task: AzureRmWebAppDeployment@4
             inputs:
               ConnectionType: "AzureRM"
-              azureSubscription: ## "tylercadena(560df603-82d8-4415-93a1-c821e91a310d)"
+              azureSubscription: "tylercadena(740adccb-1991-4b18-b49f-d6bdc684c399)"
               appType: "webAppContainer"
               WebAppName: "trainingdotnet2020"
               DockerNamespace: "tylercadena"
-              DockerRepository: "p1proj"
+              DockerRepository: "tcfirstproj"
 
 trigger:
   - master
