@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using PizzaBox.Domain.Abstracts;
 
 namespace PizzaBox.Domain.Models {
@@ -10,6 +11,7 @@ namespace PizzaBox.Domain.Models {
 		public long StoreID { get; set; }
 		public DateTime DateTime { get; set; }
 		public bool Completed { get; set; }
+		[Column(TypeName = "decimal(18,4)")]
 		public decimal Price {
 			get {
 				return Math.Min(
@@ -30,7 +32,7 @@ namespace PizzaBox.Domain.Models {
 			return OrderID;
 		}
 		public override string ToString() {
-			string result = $"Time: {DateTime} User: {User.Username} Store: {Store.Name} at {Store.Location} Pizzas: ";
+			string result = $"Time: {DateTime} User: {User.Username} Store At: {Store.Location} Pizzas: ";
 			foreach (OrderPizza op in OrderPizzas) {
 				Pizza p = op.Pizza;
 				result += $"{op.ToString()} ";

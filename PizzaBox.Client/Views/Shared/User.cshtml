@@ -1,0 +1,11 @@
+@model PizzaBox.Domain.Models.User
+<h1>User</h1>
+
+@*<form action="/user/history" method="GET">
+	@Html.HiddenFor(u => u.UserID)
+	<button type="submit">Order History</button>
+</form>*@
+
+<a href="/user/history">Order History</a>
+<a href="/user/order">Place Order</a>
+<a href="/account/logout">Logout</a>

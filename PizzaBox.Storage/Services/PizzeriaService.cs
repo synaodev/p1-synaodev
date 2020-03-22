@@ -7,6 +7,7 @@ using PizzaBox.Storage.Repositories;
 namespace PizzaBox.Storage.Services {
 	public class PizzeriaService {
 		public PizzeriaService(PizzaBoxDbContext context) {
+			_ctx = context;
 			_pr = new PizzaRepository(context);
 			_cr = new CrustRepository(context);
 			_sr = new SizeRepository(context);
@@ -15,6 +16,7 @@ namespace PizzaBox.Storage.Services {
 			_or = new OrderRepository(context);
 			_rr = new StoreRepository(context);
 		}
+		private PizzaBoxDbContext _ctx;
 		private PizzaRepository _pr;
 		private CrustRepository _cr;
 		private SizeRepository _sr;
@@ -22,10 +24,6 @@ namespace PizzaBox.Storage.Services {
 		private UserRepository _ur;
 		private OrderRepository _or;
 		private StoreRepository _rr;
-		// Placeholder
-		public object CheckAccount(string user, string password) {
-			return _pr.CheckAccount(user, password);
-		}
 		// GET ALL
 		public List<Pizza> GetPizzas() {
 			return _pr.Get();
@@ -87,35 +85,35 @@ namespace PizzaBox.Storage.Services {
 					ToppingID = t.ToppingID
 				});
 			}
-			return _pr.Post(p);
+			return _pr.Post(p, _ctx);
 		}
 		public bool PostCrust(string name, decimal price) {
 			Crust c = new Crust() {
 				Name = name,
 				Price = price
 			};
-			return _cr.Post(c);
+			return _cr.Post(c, _ctx);
 		}
 		public bool PostSize(string name, decimal price) {
 			Size s = new Size() {
 				Name = name,
 				Price = price
 			};
-			return _sr.Post(s);
+			return _sr.Post(s, _ctx);
 		}
 		public bool PostTopping(string name, decimal price) {
 			Topping t = new Topping() {
 				Name = name,
 				Price = price
 			};
-			return _tr.Post(t);
+			return _tr.Post(t, _ctx);
 		}
 		public bool PostUser(string username, string password) {
 			User u = new User() {
 				Username = username,
 				Password = password
 			};
-			return _ur.Post(u);
+			return _ur.Post(u, _ctx);
 		}
 		public bool PostOrder(User user, Store store, DateTime datetime, List<Pizza> pizzas) {
 			Order o = new Order() {
@@ -135,62 +133,66 @@ namespace PizzaBox.Storage.Services {
 					PizzaID = p.PizzaID
 				});
 			}
-			return _or.Post(o);
+			return _or.Post(o, _ctx);
 		}
-		public bool PostStore(string name, string location) {
+		public bool PostStore(string username, string password, string location) {
 			Store r = new Store() {
-				Name = name,
+				Username = username,
+				Password = password,
 				Location = location
 			};
-			return _rr.Post(r);
+			return _rr.Post(r, _ctx);
 		}
 		// PUT
 		public bool PutPizza(Pizza p) {
-			return _pr.Put(p);
+			return _pr.Put(p, _ctx);
 		}
 		public bool PutCrust(Crust c) {
-			return _cr.Put(c);
+			return _cr.Put(c, _ctx);
 		}
 		public bool PutSize(Size s) {
-			return _sr.Put(s);
+			return _sr.Put(s, _ctx);
 		}
 		public bool PutTopping(Topping t) {
-			return _tr.Put(t);
+			return _tr.Put(t, _ctx);
 		}
 		public bool PutUser(User u) {
-			return _ur.Put(u);
+			return _ur.Put(u, _ctx);
 		}
 		public bool PutOrder(Order o) {
-			return _or.Put(o);
+			return _or.Put(o, _ctx);
 		}
 		public bool PutStore(Store s) {
-			return _rr.Put(s);
+			return _rr.Put(s, _ctx);
 		}
 		// DELETE
 		public bool DeletePizza(Pizza p) {
-			return _pr.Delete(p);
+			return _pr.Delete(p, _ctx);
 		}
 		public bool DeleteCrust(Crust c) {
-			return _cr.Delete(c);
+			return _cr.Delete(c, _ctx);
 		}
 		public bool DeleteSize(Size s) {
-			return _sr.Delete(s);
+			return _sr.Delete(s, _ctx);
 		}
 		public bool DeleteTopping(Topping t) {
-			return _tr.Delete(t);
+			return _tr.Delete(t, _ctx);
 		}
 		public bool DeleteUser(User u) {
-			return _ur.Delete(u);
+			return _ur.Delete(u, _ctx);
 		}
 		public bool DeleteOrder(Order o) {
-			return _or.Delete(o);
+			return _or.Delete(o, _ctx);
 		}
 		public bool DeleteStore(Store s) {
-			return _rr.Delete(s);
+			return _rr.Delete(s, _ctx);
 		}
 		// OTHER
 		public User FindUserByName(string username) {
 			return _ur.FindByName(username);
+		}
+		public Store FindStoreByName(string username) {
+			return _rr.FindByName(username);
 		}
 	}
 }

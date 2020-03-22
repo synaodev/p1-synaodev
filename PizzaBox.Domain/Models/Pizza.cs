@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 using PizzaBox.Domain.Abstracts;
 
 namespace PizzaBox.Domain.Models {
 	public class Pizza : AModel {
 		public long PizzaID { get; set; }
+		[Column(TypeName = "decimal(18,4)")]
 		public decimal Price {
 			get {
 				if (Crust == null || Size == null || PizzaToppings == null) {

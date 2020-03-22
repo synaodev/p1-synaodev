@@ -6,17 +6,17 @@ using PizzaBox.Storage.Databases;
 
 namespace PizzaBox.Storage.Repositories {
 	public class ToppingRepository : ARepository<Topping> {
-		public ToppingRepository(PizzaBoxDbContext context) : base(context) {
+		public ToppingRepository(PizzaBoxDbContext context) : base(context.Toppings) {
 
 		}
 		public override List<Topping> Get() {
-			return Context.Set<Topping>()
+			return Table
 				.Include(t => t.PizzaToppings)
 				.ThenInclude(pt => pt.Pizza)
 			.ToList();
 		}
 		public override Topping Get(long ID) {
-			return Context.Set<Topping>().SingleOrDefault(t => t.ToppingID == ID);
+			return Table.SingleOrDefault(t => t.ToppingID == ID);
 		}
 	}
 }

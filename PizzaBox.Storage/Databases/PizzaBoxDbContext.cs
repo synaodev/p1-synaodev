@@ -10,6 +10,7 @@ namespace PizzaBox.Storage.Databases {
 		public DbSet<User> Users { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<Store> Stores { get; set; }
+		public PizzaBoxDbContext(DbContextOptions options) : base(options) {}
 		protected override void OnConfiguring(DbContextOptionsBuilder builder) {
 			builder.UseSqlServer("server=localhost;database=pizzaboxdb;user id=sa;password=Password12345;");
 		}
@@ -113,9 +114,9 @@ namespace PizzaBox.Storage.Databases {
 			builder.Entity<PizzaTopping>().HasData(pizzatoppings);
 
 			Store[] stores = new Store[] {
-				new Store() { StoreID = 1, Name = "Eat At Joe's", Location = "Albequerque" },
-				new Store() { StoreID = 2, Name = "Muggy Pizza", Location = "New York" },
-				new Store() { StoreID = 3, Name = "Whatever Man", Location = "New Mexico" }
+				new Store() { StoreID = 1, Username = "EatAtJoe", Password = "Cadena", Location = "Albequerque" },
+				new Store() { StoreID = 2, Username = "MuggyPizza", Password = "Benjamin", Location = "New York" },
+				new Store() { StoreID = 3, Username = "Whatever", Password = "Mario", Location = "New Mexico" }
 			};
 
 			builder.Entity<Store>().HasData(stores);

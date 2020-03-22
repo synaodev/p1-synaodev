@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using PizzaBox.Client.Models;
-using PizzaBox.Storage.Repositories;
+using PizzaBox.Domain.Models;
+using PizzaBox.Storage.Services;
 
 namespace PizzaBox.Client.Controllers {
 	public class AccountController : Controller {
-		private PizzaRepository _pbr;
-		public AccountController(PizzaRepository pbr) {
-			_pbr = pbr;
+		private PizzeriaService _ps;
+		public AccountController(PizzeriaService ps) {
+			_ps = ps;
 		}
 		[HttpGet]
 		public IActionResult Login() {
@@ -15,12 +16,20 @@ namespace PizzaBox.Client.Controllers {
 		[HttpPost]
 		public IActionResult Login(AccountViewModel account) {
 			if (ModelState.IsValid) {
-				var acct = _pbr.CheckAccount(account.Username, account.Password);
-				if (acct != null) {
-					if (account.User) {
-						return View("User", acct);
+				if (account.User) {
+					User user = _ps.FindUserByName(account.Username);
+					if (user != null) {
+						if (user.Password == account.Password) {
+							return View("User", user);
+						}
 					}
-					return View("Store", acct);
+				} else {
+					Store store = _ps.FindStoreByName(account.Username);
+					if (store != null) {
+						if (store.Password == account.Password) {
+							return View("Store", store);
+						}
+					}
 				}
 			}
 			return View(account);

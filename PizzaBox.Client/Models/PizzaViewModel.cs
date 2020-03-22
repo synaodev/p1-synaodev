@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using System.Linq;
 using PizzaBox.Domain.Models;
-using PizzaBox.Storage.Repositories;
+using PizzaBox.Storage.Services;
 
 namespace PizzaBox.Client.Models {
 	public class PizzaViewModel {
-		private PizzaRepository _pr;
-		public PizzaViewModel(PizzaRepository repository) {
-			_pr = repository;
+		private PizzeriaService _ps;
+		public PizzaViewModel(PizzeriaService ps) {
+			_ps = ps;
 		}
 		public List<Crust> CrustList { get; set; }
 		public List<Size> SizeList { get; set; }
@@ -19,9 +18,9 @@ namespace PizzaBox.Client.Models {
 			// CrustList = _pbr.Read<Crust>().ToList();
 			// SizeList = _pbr.Read<Size>().ToList();
 			// ToppingList = _pbr.Read<Topping>().ToList();
-			CrustList = _pr.GetCrusts();
-			SizeList = _pr.GetSizes();
-			ToppingList = _pr.GetToppings();
+			CrustList = _ps.GetCrusts();
+			SizeList = _ps.GetSizes();
+			ToppingList = _ps.GetToppings();
 		}
 	}
 }
