@@ -6,11 +6,11 @@ using PizzaBox.Storage.Databases;
 
 namespace PizzaBox.Storage.Repositories {
 	public class PizzaRepository : ARepository<Pizza> {
-		public PizzaRepository(PizzaBoxDbContext context) : base(context, context.Pizzas) {
+		public PizzaRepository(PizzaBoxDbContext context) : base(context) {
 
 		}
 		public override List<Pizza> Get() {
-			return Table
+			return Context.Set<Pizza>()
 				.Include(p => p.Crust)
 				.Include(p => p.Size)
 				.Include(p => p.PizzaToppings)
@@ -20,16 +20,16 @@ namespace PizzaBox.Storage.Repositories {
 			.ToList();
 		}
 		public override Pizza Get(long ID) {
-			return Table.SingleOrDefault(p => p.PizzaID == ID);
+			return Context.Set<Pizza>().SingleOrDefault(p => p.PizzaID == ID);
 		}
 		public List<Crust> GetCrusts() {
-			return Context.Crusts.Include(c => c.Pizzas).ToList();
+			return Context.Set<Crust>().Include(c => c.Pizzas).ToList();
 		}
 		public List<Size> GetSizes() {
-			return Context.Sizes.Include(s => s.Pizzas).ToList();
+			return Context.Set<Size>().Include(s => s.Pizzas).ToList();
 		}
 		public List<Topping> GetToppings() {
-			return Context.Toppings
+			return Context.Set<Topping>()
 				.Include(t => t.PizzaToppings)
 				.ThenInclude(pt => pt.Pizza)
 			.ToList();

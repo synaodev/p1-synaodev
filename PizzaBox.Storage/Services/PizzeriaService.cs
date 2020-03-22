@@ -75,7 +75,7 @@ namespace PizzaBox.Storage.Services {
 			Pizza p = new Pizza() {
 				CrustID = crust.CrustID,
 				SizeID = size.SizeID,
-				// PizzaToppings = new List<PizzaTopping>()
+				PizzaToppings = new List<PizzaTopping>()
 			};
 			foreach (Topping t in toppings) {
 				p.PizzaToppings.Add(new PizzaTopping() {
@@ -127,6 +127,10 @@ namespace PizzaBox.Storage.Services {
 			};
 			foreach (Pizza p in pizzas) {
 				o.OrderPizzas.Add(new OrderPizza() {
+					OrderID = o.OrderID,
+					PizzaID = p.PizzaID
+				});
+				p.OrderPizzas.Add(new OrderPizza() {
 					OrderID = o.OrderID,
 					PizzaID = p.PizzaID
 				});

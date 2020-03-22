@@ -6,14 +6,14 @@ using PizzaBox.Storage.Databases;
 
 namespace PizzaBox.Storage.Repositories {
 	public class CrustRepository : ARepository<Crust> {
-		public CrustRepository(PizzaBoxDbContext context) : base(context, context.Crusts) {
+		public CrustRepository(PizzaBoxDbContext context) : base(context) {
 			
 		}
 		public override List<Crust> Get() {
-			return Table.Include(c => c.Pizzas).ToList();
+			return Context.Set<Crust>().Include(c => c.Pizzas).ToList();
 		}
 		public override Crust Get(long ID) {
-			return Table.SingleOrDefault(c => c.CrustID == ID);
+			return Context.Set<Crust>().SingleOrDefault(c => c.CrustID == ID);
 		}
 	}
 }

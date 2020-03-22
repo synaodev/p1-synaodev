@@ -6,17 +6,17 @@ using PizzaBox.Storage.Databases;
 
 namespace PizzaBox.Storage.Repositories {
 	public class UserRepository : ARepository<User> {
-		public UserRepository(PizzaBoxDbContext context) : base(context, context.Users) {
+		public UserRepository(PizzaBoxDbContext context) : base(context) {
 
 		}
 		public override List<User> Get() {
-			return Table.Include(u => u.Orders).ToList();
+			return Context.Set<User>().Include(u => u.Orders).ToList();
 		}
 		public override User Get(long ID) {
-			return Table.SingleOrDefault(u => u.UserID == ID);
+			return Context.Set<User>().SingleOrDefault(u => u.UserID == ID);
 		}
 		public User FindByName(string username) {
-			return Table.Where(u => u.Username == username).First();
+			return Context.Set<User>().Where(u => u.Username == username).First();
 		}
 	}
 }
