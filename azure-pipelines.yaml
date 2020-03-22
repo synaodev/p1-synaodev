@@ -69,10 +69,10 @@ stages:
           - task: AzureRmWebAppDeployment@4
             inputs:
               ConnectionType: "AzureRM"
-              azureSubscription: "fredbelotte(560df603-82d8-4415-93a1-c821e91a310d)"
+              azureSubscription: ## "tylercadena(560df603-82d8-4415-93a1-c821e91a310d)"
               appType: "webAppContainer"
               WebAppName: "trainingdotnet2020"
-              DockerNamespace: "fredbelotte"
+              DockerNamespace: "tylercadena"
               DockerRepository: "p1proj"
 
 trigger:
@@ -80,6 +80,6 @@ trigger:
 
 variables:
   - name: image_name
-    value: fredbelotte/p1proj
+    value: tylercadena/tcfirstproj
   - name: working_dir
-    value: $(System.DefaultWorkingDirectory)/p1-project
+    value: $(System.DefaultWorkingDirectory)
