@@ -120,7 +120,6 @@ namespace PizzaBox.Storage.Services {
 				UserID = user.UserID,
 				StoreID = store.StoreID,
 				DateTime = datetime,
-				Completed = false,
 				OrderPizzas = new List<OrderPizza>()
 			};
 			foreach (Pizza p in pizzas) {
@@ -193,6 +192,12 @@ namespace PizzaBox.Storage.Services {
 		}
 		public Store FindStoreByName(string username) {
 			return _rr.FindByName(username);
+		}
+		public List<Order> FindOrdersByUser(User user) {
+			return _or.FindByUser(user);
+		}
+		public List<Order> FindOrdersByStore(Store store) {
+			return _or.FindByStore(store);
 		}
 	}
 }

@@ -1,0 +1,19 @@
+@model PizzaBox.Client.Models.UserViewModel
+
+<h1>Order History</h1>
+
+<ul>
+	@foreach (var order in @Model.Orders) {
+		<li>
+			Time: @order.DateTime.ToString()<br>
+			Store: @order.Store.Location<br>
+			Price: @order.Price<br>
+			Pizzas: 
+			<ul>
+				@foreach (var op in order.OrderPizzas) {
+					<li>@op.Pizza.ToString()</li>
+				}
+			</ul>
+		</li>
+	}
+</ul>

@@ -105,8 +105,7 @@ namespace PizzaBox.Storage.Migrations
                     OrderID = table.Column<long>(nullable: false),
                     UserID = table.Column<long>(nullable: false),
                     StoreID = table.Column<long>(nullable: false),
-                    DateTime = table.Column<DateTime>(nullable: false),
-                    Completed = table.Column<bool>(nullable: false)
+                    DateTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -208,11 +207,11 @@ namespace PizzaBox.Storage.Migrations
                 columns: new[] { "ToppingID", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 637204995153802176L, "Cheese", 0.25m },
-                    { 637204995153802450L, "Tomato Sauce", 0.75m },
-                    { 637204995153802469L, "Pepperoni", 0.50m },
-                    { 637204995153802472L, "Bacon", 0.45m },
-                    { 637204995153802475L, "Anchovies", 1.00m }
+                    { 637205515438138710L, "Cheese", 0.25m },
+                    { 637205515438138974L, "Tomato Sauce", 0.75m },
+                    { 637205515438138987L, "Pepperoni", 0.50m },
+                    { 637205515438138990L, "Bacon", 0.45m },
+                    { 637205515438138992L, "Anchovies", 1.00m }
                 });
 
             migrationBuilder.InsertData(
@@ -245,15 +244,15 @@ namespace PizzaBox.Storage.Migrations
                 columns: new[] { "PizzaID", "ToppingID" },
                 values: new object[,]
                 {
-                    { 1L, 637204995153802176L },
-                    { 1L, 637204995153802450L },
-                    { 1L, 637204995153802469L },
-                    { 2L, 637204995153802176L },
-                    { 2L, 637204995153802450L },
-                    { 2L, 637204995153802472L },
-                    { 3L, 637204995153802176L },
-                    { 3L, 637204995153802450L },
-                    { 3L, 637204995153802475L }
+                    { 1L, 637205515438138710L },
+                    { 1L, 637205515438138974L },
+                    { 1L, 637205515438138987L },
+                    { 2L, 637205515438138710L },
+                    { 2L, 637205515438138974L },
+                    { 2L, 637205515438138990L },
+                    { 3L, 637205515438138710L },
+                    { 3L, 637205515438138974L },
+                    { 3L, 637205515438138992L }
                 });
 
             migrationBuilder.CreateIndex(

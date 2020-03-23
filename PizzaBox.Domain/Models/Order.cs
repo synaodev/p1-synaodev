@@ -10,7 +10,6 @@ namespace PizzaBox.Domain.Models {
 		public long UserID { get; set; }
 		public long StoreID { get; set; }
 		public DateTime DateTime { get; set; }
-		public bool Completed { get; set; }
 		[Column(TypeName = "decimal(18,4)")]
 		public decimal Price {
 			get {

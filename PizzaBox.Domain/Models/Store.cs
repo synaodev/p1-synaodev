@@ -13,7 +13,7 @@ namespace PizzaBox.Domain.Models {
 		[Column(TypeName = "decimal(18,4)")]
 		public decimal Revanue {
 			get {
-				return Orders.Sum(o => o.Completed ? o.Price : 0.0M);
+				return Orders.Sum(o => o.Price);
 			}
 		}
 		#region NAVIGATIONAL PROPERTIES

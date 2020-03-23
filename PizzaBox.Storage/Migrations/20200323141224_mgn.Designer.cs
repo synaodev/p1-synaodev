@@ -10,7 +10,7 @@ using PizzaBox.Storage.Databases;
 namespace PizzaBox.Storage.Migrations
 {
     [DbContext(typeof(PizzaBoxDbContext))]
-    [Migration("20200322234515_mgn")]
+    [Migration("20200323141224_mgn")]
     partial class mgn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,9 +61,6 @@ namespace PizzaBox.Storage.Migrations
                 {
                     b.Property<long>("OrderID")
                         .HasColumnType("bigint");
-
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
@@ -156,47 +153,47 @@ namespace PizzaBox.Storage.Migrations
                         new
                         {
                             PizzaID = 1L,
-                            ToppingID = 637204995153802176L
+                            ToppingID = 637205515438138710L
                         },
                         new
                         {
                             PizzaID = 1L,
-                            ToppingID = 637204995153802450L
+                            ToppingID = 637205515438138974L
                         },
                         new
                         {
                             PizzaID = 1L,
-                            ToppingID = 637204995153802469L
+                            ToppingID = 637205515438138987L
                         },
                         new
                         {
                             PizzaID = 2L,
-                            ToppingID = 637204995153802176L
+                            ToppingID = 637205515438138710L
                         },
                         new
                         {
                             PizzaID = 2L,
-                            ToppingID = 637204995153802450L
+                            ToppingID = 637205515438138974L
                         },
                         new
                         {
                             PizzaID = 2L,
-                            ToppingID = 637204995153802472L
+                            ToppingID = 637205515438138990L
                         },
                         new
                         {
                             PizzaID = 3L,
-                            ToppingID = 637204995153802176L
+                            ToppingID = 637205515438138710L
                         },
                         new
                         {
                             PizzaID = 3L,
-                            ToppingID = 637204995153802450L
+                            ToppingID = 637205515438138974L
                         },
                         new
                         {
                             PizzaID = 3L,
-                            ToppingID = 637204995153802475L
+                            ToppingID = 637205515438138992L
                         });
                 });
 
@@ -296,31 +293,31 @@ namespace PizzaBox.Storage.Migrations
                     b.HasData(
                         new
                         {
-                            ToppingID = 637204995153802176L,
+                            ToppingID = 637205515438138710L,
                             Name = "Cheese",
                             Price = 0.25m
                         },
                         new
                         {
-                            ToppingID = 637204995153802450L,
+                            ToppingID = 637205515438138974L,
                             Name = "Tomato Sauce",
                             Price = 0.75m
                         },
                         new
                         {
-                            ToppingID = 637204995153802469L,
+                            ToppingID = 637205515438138987L,
                             Name = "Pepperoni",
                             Price = 0.50m
                         },
                         new
                         {
-                            ToppingID = 637204995153802472L,
+                            ToppingID = 637205515438138990L,
                             Name = "Bacon",
                             Price = 0.45m
                         },
                         new
                         {
-                            ToppingID = 637204995153802475L,
+                            ToppingID = 637205515438138992L,
                             Name = "Anchovies",
                             Price = 1.00m
                         });

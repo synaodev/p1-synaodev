@@ -1,6 +1,6 @@
 @model PizzaBox.Client.Models.PizzaViewModel
 
-<form action="/pizza/create" method="POST">
+<form action="/Pizza/Create" method="POST">
 	@Html.AntiForgeryToken()
 	<select asp-for="@Model.Crust">
 		@foreach (var item in @Model.CrustList) {

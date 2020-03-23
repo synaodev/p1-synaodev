@@ -7,6 +7,5 @@ namespace PizzaBox.Client.Models {
 		[Required]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
-		public bool User { get; set; }
 	}
 }

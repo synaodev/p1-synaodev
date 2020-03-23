@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using PizzaBox.Client.Models;
 using PizzaBox.Domain.Models;
 using PizzaBox.Storage.Services;
@@ -16,23 +17,35 @@ namespace PizzaBox.Client.Controllers {
 		[HttpPost]
 		public IActionResult Login(AccountViewModel account) {
 			if (ModelState.IsValid) {
-				if (account.User) {
-					User user = _ps.FindUserByName(account.Username);
-					if (user != null) {
-						if (user.Password == account.Password) {
-							return View("User", user);
+				const string kAdminIndicator = "ADMIN:";
+				if (account.Username.Length > kAdminIndicator.Length) {
+					if (account.Username.Substring(0, kAdminIndicator.Length) == kAdminIndicator) {
+						Store store = _ps.FindStoreByName(account.Username);
+						if (store != null) {
+							if (store.Password == account.Password) {
+								HttpContext.Session.SetString("AcctID", store.StoreID.ToString());
+								HttpContext.Session.SetInt32("AcctAdmin", 1);
+								return Redirect("/Store/Index");
+							}
 						}
 					}
-				} else {
-					Store store = _ps.FindStoreByName(account.Username);
-					if (store != null) {
-						if (store.Password == account.Password) {
-							return View("Store", store);
-						}
+				}
+				User user = _ps.FindUserByName(account.Username);
+				if (user != null) {
+					if (user.Password == account.Password) {
+						HttpContext.Session.SetString("AcctID", user.UserID.ToString());
+						HttpContext.Session.SetInt32("AcctAdmin", 0);
+						return Redirect("/User/Index");
 					}
 				}
 			}
 			return View(account);
+		}
+		[HttpGet]
+		public IActionResult Logout() {
+			HttpContext.Session.Remove("AcctID");
+			HttpContext.Session.Remove("AcctAdmin");
+			return Redirect("/Home/Index");
 		}
 	}
 }

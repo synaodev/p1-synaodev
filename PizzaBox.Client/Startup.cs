@@ -19,6 +19,12 @@ namespace PizzaBox.Client {
         }
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services) {
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddControllersWithViews();
             services.AddDbContext<PizzaBoxDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("main")));
             services.AddScoped<PizzeriaService>();
@@ -33,6 +39,7 @@ namespace PizzaBox.Client {
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => {

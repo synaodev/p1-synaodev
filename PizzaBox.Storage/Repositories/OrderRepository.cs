@@ -20,5 +20,21 @@ namespace PizzaBox.Storage.Repositories {
 		public override Order Get(long ID) {
 			return Table.SingleOrDefault(o => o.OrderID == ID);
 		}
+		public List<Order> FindByUser(User user) {
+			return Table
+				.Where(o => o.UserID == user.UserID)
+				.Include(o => o.Store)
+				.Include(o => o.OrderPizzas)
+				.ThenInclude(op => op.Pizza)
+			.ToList();
+		}
+		public List<Order> FindByStore(Store store) {
+			return Table
+				.Where(o => o.StoreID == store.StoreID)
+				.Include(o => o.User)
+				.Include(o => o.OrderPizzas)
+				.ThenInclude(op => op.Pizza)
+			.ToList();
+		}
 	}
 }
