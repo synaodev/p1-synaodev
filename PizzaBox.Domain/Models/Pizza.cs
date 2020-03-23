@@ -16,6 +16,14 @@ namespace PizzaBox.Domain.Models {
 				return Crust.Price + Size.Price + PizzaToppings.Sum(t => t.Topping.Price);
 			}
 		}
+		public string Name {
+			get {
+				if (Crust == null || Size == null) {
+					return "";
+				}
+				return $"{Crust.Name} {Size.Name}";
+			}
+		}
 		public long CrustID { get; set; }
 		public long SizeID { get; set; }
 		#region NAVIGATIONAL PROPERTIES

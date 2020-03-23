@@ -50,6 +50,9 @@ namespace PizzaBox.Storage.Services {
 		public Pizza GetPizza(long ID) {
 			return _pr.Get(ID);
 		}
+		public List<Pizza> GetPizzas(List<long> ids) {
+			return _pr.Get(ids);
+		}
 		public Crust GetCrust(long ID) {
 			return _cr.Get(ID);
 		}
@@ -115,11 +118,11 @@ namespace PizzaBox.Storage.Services {
 			};
 			return _ur.Post(u, _ctx);
 		}
-		public bool PostOrder(User user, Store store, DateTime datetime, List<Pizza> pizzas) {
+		public bool PostOrder(User user, Store store, List<Pizza> pizzas) {
 			Order o = new Order() {
 				UserID = user.UserID,
 				StoreID = store.StoreID,
-				DateTime = datetime,
+				DateTime = DateTime.Now,
 				OrderPizzas = new List<OrderPizza>()
 			};
 			foreach (Pizza p in pizzas) {

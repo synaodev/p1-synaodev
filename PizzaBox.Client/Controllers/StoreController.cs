@@ -31,15 +31,17 @@ namespace PizzaBox.Client.Controllers {
 		public IActionResult Index() {
 			Store store = GetCurrentStore();
 			if (store == null) {
-				return Redirect("/Home/Index");
+				return Redirect("/Account/Logout");
 			}
+			ViewData["Username"] = store.Username;
+			ViewData["Location"] = store.Location;
 			return View(new StoreViewModel(_ps, store));
 		}
 		[HttpGet]
 		public IActionResult History() {
 			Store store = GetCurrentStore();
 			if (store == null) {
-				return Redirect("/Home/Index");
+				return Redirect("/Account/Logout");
 			}
 			return View(new StoreViewModel(_ps, store));
 		}

@@ -20,5 +20,8 @@ namespace PizzaBox.Client.Models {
 			Location = store.Location;
 			Orders = _ps.FindOrdersByStore(store);
 		}
+		public StoreViewModel() {
+			
+		}
 	}
 }

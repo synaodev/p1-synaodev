@@ -3,7 +3,7 @@
 <h1>Order History</h1>
 
 <ul>
-	@foreach (var order in @Model.Orders) {
+	@foreach (var order in @Model.OrderList) {
 		<li>
 			Time: @order.DateTime.ToString()<br>
 			Store: @order.Store.Location<br>

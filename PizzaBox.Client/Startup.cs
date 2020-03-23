@@ -21,7 +21,7 @@ namespace PizzaBox.Client {
         public void ConfigureServices(IServiceCollection services) {
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(5);
+                // options.IdleTimeout = TimeSpan.FromMinutes(5);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

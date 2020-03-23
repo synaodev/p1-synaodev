@@ -1,2 +1,17 @@
+@using PizzaBox.Client.Utility
 @model PizzaBox.Client.Models.UserViewModel
 
+<form action="/User/Order" method="POST">
+	@Html.AntiForgeryToken()
+	<label>Pizza</label>
+	<select name="PizzaName">
+		@{
+			@foreach (var p in @Model.PizzaList) {
+				<option value="@p.Name">@p.Name - $@p.Price</option>
+			}
+		}
+	</select>
+	@{
+		@foreach (var item in )
+	}
+</form>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using PizzaBox.Client.Models;
@@ -31,15 +32,16 @@ namespace PizzaBox.Client.Controllers {
 		public IActionResult Index() {
 			User user = GetCurrentUser();
 			if (user == null) {
-				return Redirect("/Home/Index");
+				return Redirect("/Account/Logout");
 			}
+			ViewData["Username"] = user.Username;
 			return View(new UserViewModel(_ps, user));
 		}
 		[HttpGet]
 		public IActionResult History() {
 			User user = GetCurrentUser();
 			if (user == null) {
-				return Redirect("/Home/Index");
+				return Redirect("/Account/Logout");
 			}
 			return View(new UserViewModel(_ps, user));
 		}
@@ -47,12 +49,18 @@ namespace PizzaBox.Client.Controllers {
 		public IActionResult Order() {
 			User user = GetCurrentUser();
 			if (user == null) {
-				return Redirect("/Home/Index");
+				return Redirect("/Account/Logout");
 			}
 			return View(new UserViewModel(_ps, user));
 		}
 		[HttpPost]
 		public IActionResult Order(UserViewModel uvm) {
+			if (ModelState.IsValid) {
+				List<Pizza> pizzas = new List<Pizza>() { uvm.Pizza };
+				if (_ps.PostOrder(uvm.User, uvm.Store, pizzas)) {
+					return Redirect("/User/Index");
+				}
+			}
 			return View(uvm);
 		}
 	}

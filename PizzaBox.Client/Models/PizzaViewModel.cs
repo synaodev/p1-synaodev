@@ -17,5 +17,8 @@ namespace PizzaBox.Client.Models {
 			SizeList = _ps.GetSizes();
 			ToppingList = _ps.GetToppings();
 		}
+		public PizzaViewModel() {
+			
+		}
 	}
 }
