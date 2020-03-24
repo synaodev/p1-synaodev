@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -98,7 +99,7 @@ namespace PizzaBox.Client.Controllers {
 				return View(uvm);
 			}
 			List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
-			if (cart == null || cart.Count == 0) {
+			if (cart == null || cart.Count == 0 || cart.Count == 50) {
 				return View(uvm);
 			}
 			List<Pizza> real_pizzas = ConvertFakePizzas(cart);
