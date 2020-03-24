@@ -26,6 +26,7 @@ namespace PizzaBox.Client {
                 options.Cookie.IsEssential = true;
             });
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             services.AddDbContext<PizzaBoxDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("main")));
             services.AddScoped<PizzeriaService>();
         }

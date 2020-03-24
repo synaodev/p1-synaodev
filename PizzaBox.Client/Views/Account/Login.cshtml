@@ -9,7 +9,6 @@
 	<label asp-for="@Model.Password">Password</label>
 	<input type="password" asp-for="@Model.Password">
 	@Html.ValidationMessageFor(avm => avm.Password)
-
-	<button type="reset">Clear</button>
+	@Html.RadioButtonFor(avm => avm.Admin, false)
 	<button type="submit">Login</button>
 </form>

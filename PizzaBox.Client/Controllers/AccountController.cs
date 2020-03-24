@@ -17,16 +17,13 @@ namespace PizzaBox.Client.Controllers {
 		[HttpPost]
 		public IActionResult Login(AccountViewModel account) {
 			if (ModelState.IsValid) {
-				const string kAdminIndicator = "ADMIN:";
-				if (account.Username.Length > kAdminIndicator.Length) {
-					if (account.Username.Substring(0, kAdminIndicator.Length) == kAdminIndicator) {
-						Store store = _ps.FindStoreByName(account.Username);
-						if (store != null) {
-							if (store.Password == account.Password) {
-								HttpContext.Session.SetString("AcctID", store.StoreID.ToString());
-								HttpContext.Session.SetInt32("AcctAdmin", 1);
-								return Redirect("/Store/Index");
-							}
+				if (account.Admin) {
+					Store store = _ps.FindStoreByName(account.Username);
+					if (store != null) {
+						if (store.Password == account.Password) {
+							HttpContext.Session.SetString("AcctID", store.StoreID.ToString());
+							HttpContext.Session.SetInt32("AcctAdmin", 1);
+							return Redirect("/Store/Index");
 						}
 					}
 				}
@@ -45,6 +42,10 @@ namespace PizzaBox.Client.Controllers {
 		public IActionResult Logout() {
 			HttpContext.Session.Remove("AcctID");
 			HttpContext.Session.Remove("AcctAdmin");
+			HttpContext.Session.Remove("Cart");
+			HttpContext.Session.Remove("CrustID");
+			HttpContext.Session.Remove("SizeID");
+			HttpContext.Session.Remove("Toppings");
 			return Redirect("/Home/Index");
 		}
 	}

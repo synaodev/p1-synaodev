@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using PizzaBox.Client.Models;
 using PizzaBox.Domain.Models;
 using PizzaBox.Storage.Services;
+using PizzaBox.Client.Utility;
 
 namespace PizzaBox.Client.Controllers {
 	public class UserController : Controller {
@@ -51,17 +52,41 @@ namespace PizzaBox.Client.Controllers {
 			if (user == null) {
 				return Redirect("/Account/Logout");
 			}
-			return View(new UserViewModel(_ps, user));
+			List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
+			return View(new UserViewModel(_ps, user, cart));
+		}
+		[HttpPost]
+		public IActionResult Cart(UserViewModel uvm) {
+			Pizza pizza = _ps.GetPizza(uvm.PizzaID);
+			if (pizza != null) {
+				List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
+				if (cart == null) {
+					cart = new List<Pizza>();
+				}
+				cart.Add(pizza);
+				SessionSerializer.ToJson(HttpContext.Session, "Cart", cart);
+			}
+			return Redirect("/User/Order");
 		}
 		[HttpPost]
 		public IActionResult Order(UserViewModel uvm) {
-			if (ModelState.IsValid) {
-				List<Pizza> pizzas = new List<Pizza>() { uvm.Pizza };
-				if (_ps.PostOrder(uvm.User, uvm.Store, pizzas)) {
-					return Redirect("/User/Index");
-				}
+			User user = GetCurrentUser();
+			if (user == null) {
+				return Redirect("/Account/Logout");
 			}
-			return View(uvm);
+			Store store = _ps.GetStore(uvm.StoreID);
+			if (store == null) {
+				return View(uvm);
+			}
+			List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
+			if (cart.Count == 0) {
+				return View(uvm);
+			}
+			if (!_ps.PostOrder(user, store, cart)) {
+				return View(uvm);
+			}
+			HttpContext.Session.Remove("Cart");
+			return Redirect("/User/Index");
 		}
 	}
 }

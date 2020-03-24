@@ -151,47 +151,47 @@ namespace PizzaBox.Storage.Migrations
                         new
                         {
                             PizzaID = 1L,
-                            ToppingID = 637205591891451188L
+                            ToppingID = 637205805393047906L
                         },
                         new
                         {
                             PizzaID = 1L,
-                            ToppingID = 637205591891451477L
+                            ToppingID = 637205805393048334L
                         },
                         new
                         {
                             PizzaID = 1L,
-                            ToppingID = 637205591891451492L
+                            ToppingID = 637205805393048352L
                         },
                         new
                         {
                             PizzaID = 2L,
-                            ToppingID = 637205591891451188L
+                            ToppingID = 637205805393047906L
                         },
                         new
                         {
                             PizzaID = 2L,
-                            ToppingID = 637205591891451477L
+                            ToppingID = 637205805393048334L
                         },
                         new
                         {
                             PizzaID = 2L,
-                            ToppingID = 637205591891451496L
+                            ToppingID = 637205805393048355L
                         },
                         new
                         {
                             PizzaID = 3L,
-                            ToppingID = 637205591891451188L
+                            ToppingID = 637205805393047906L
                         },
                         new
                         {
                             PizzaID = 3L,
-                            ToppingID = 637205591891451477L
+                            ToppingID = 637205805393048334L
                         },
                         new
                         {
                             PizzaID = 3L,
-                            ToppingID = 637205591891451498L
+                            ToppingID = 637205805393048358L
                         });
                 });
 
@@ -291,31 +291,31 @@ namespace PizzaBox.Storage.Migrations
                     b.HasData(
                         new
                         {
-                            ToppingID = 637205591891451188L,
+                            ToppingID = 637205805393047906L,
                             Name = "Cheese",
                             Price = 0.25m
                         },
                         new
                         {
-                            ToppingID = 637205591891451477L,
+                            ToppingID = 637205805393048334L,
                             Name = "Tomato Sauce",
                             Price = 0.75m
                         },
                         new
                         {
-                            ToppingID = 637205591891451492L,
+                            ToppingID = 637205805393048352L,
                             Name = "Pepperoni",
                             Price = 0.50m
                         },
                         new
                         {
-                            ToppingID = 637205591891451496L,
+                            ToppingID = 637205805393048355L,
                             Name = "Bacon",
                             Price = 0.45m
                         },
                         new
                         {
-                            ToppingID = 637205591891451498L,
+                            ToppingID = 637205805393048358L,
                             Name = "Anchovies",
                             Price = 1.00m
                         });

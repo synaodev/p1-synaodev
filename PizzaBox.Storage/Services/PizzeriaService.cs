@@ -83,6 +83,9 @@ namespace PizzaBox.Storage.Services {
 					PizzaID = p.PizzaID,
 					ToppingID = t.ToppingID
 				});
+				if (t.PizzaToppings == null) {
+					t.PizzaToppings = new List<PizzaTopping>();
+				}
 				t.PizzaToppings.Add(new PizzaTopping() {
 					PizzaID = p.PizzaID,
 					ToppingID = t.ToppingID
@@ -130,6 +133,9 @@ namespace PizzaBox.Storage.Services {
 					OrderID = o.OrderID,
 					PizzaID = p.PizzaID
 				});
+				if (p.OrderPizzas == null) {
+					p.OrderPizzas = new List<OrderPizza>();
+				}
 				p.OrderPizzas.Add(new OrderPizza() {
 					OrderID = o.OrderID,
 					PizzaID = p.PizzaID

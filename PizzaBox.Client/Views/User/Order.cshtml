@@ -1,17 +1,36 @@
+@using PizzaBox.Domain.Models
+@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
 @using PizzaBox.Client.Utility
+@inject IHttpContextAccessor httpContextAccessor
 @model PizzaBox.Client.Models.UserViewModel
+
+<h1>Place Order</h1>
+
+<form action="/User/Cart" method="POST">
+	@Html.AntiForgeryToken()
+	<select asp-for="@Model.PizzaID">
+		@foreach (var p in @Model.PizzaList) {
+			<option value="@p.PizzaID">@p.Name - @p.Price</option>
+		}
+	</select>
+	<button type="submit">Add Pizza</button>
+</form>
 
 <form action="/User/Order" method="POST">
 	@Html.AntiForgeryToken()
-	<label>Pizza</label>
-	<select name="PizzaName">
-		@{
-			@foreach (var p in @Model.PizzaList) {
-				<option value="@p.Name">@p.Name - $@p.Price</option>
-			}
+	<select asp-for="@Model.StoreID">
+		@foreach (var s in @Model.StoreList) {
+			<option value="@s.StoreID">@s.Location</option>
 		}
 	</select>
-	@{
-		@foreach (var item in )
-	}
+	<button type="submit">Post Order</button>
 </form>
+
+@if (@Model.Cart.Count > 0) {
+	<h1>Pizzas</h1>
+	<p>Price: $@Model.Cart.Sum(p => p.Price)</p>
+	@foreach (var p in @Model.Cart) {
+		<p>@p.ToString()</p>
+	}
+}
