@@ -38,6 +38,17 @@ namespace PizzaBox.Client.Controllers {
 			}
 			return real_pizzas;
 		}
+		private bool AllowedToOrder(User user, Store store) {
+			DateTime time = DateTime.Now;
+			List<Order> orders = _ps.FindOrdersByUserAndStore(user, store);
+			if (orders.Count == 0) {
+				return true;
+			}
+			if (time.Subtract(orders[0].DateTime) >= TimeSpan.FromHours(2)) {
+				return true;
+			}
+			return false;
+		}
 		[HttpGet]
 		public IActionResult Index() {
 			User user = GetCurrentUser();
@@ -96,15 +107,19 @@ namespace PizzaBox.Client.Controllers {
 			}
 			Store store = _ps.GetStore(uvm.StoreID);
 			if (store == null) {
-				return View(uvm);
+				return Redirect("/Account/Logout");
+			}
+			if (!AllowedToOrder(user, store)) {
+				List<Pizza> new_cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
+				return View(new UserViewModel(_ps, user, new_cart));
 			}
 			List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
 			if (cart == null || cart.Count == 0 || cart.Count == 50) {
-				return View(uvm);
+				return View(new UserViewModel(_ps, user, cart));
 			}
 			List<Pizza> real_pizzas = ConvertFakePizzas(cart);
 			if (!_ps.PostOrder(user, store, real_pizzas)) {
-				return View(uvm);
+				return View(new UserViewModel(_ps, user, cart));
 			}
 			HttpContext.Session.Remove("Cart");
 			return Redirect("/User/Index");

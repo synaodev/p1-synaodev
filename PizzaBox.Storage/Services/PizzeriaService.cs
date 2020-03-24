@@ -208,6 +208,9 @@ namespace PizzaBox.Storage.Services {
 		public List<Order> FindOrdersByStore(Store store) {
 			return _or.FindByStore(store);
 		}
+		public List<Order> FindOrdersByUserAndStore(User user, Store store) {
+			return _or.FindByUserAndStore(user, store);
+		}
 		public Pizza GetPizzaReal(long ID) {
 			List<Pizza> pizzas = this.GetPizzas();
 			return pizzas.Find(p => p.PizzaID == ID);

@@ -117,7 +117,8 @@ namespace PizzaBox.Storage.Databases {
 			Store[] stores = new Store[] {
 				new Store() { StoreID = 1, Username = "Tyler", Password = "Cadena", Location = "Albequerque" },
 				new Store() { StoreID = 2, Username = "MuggyPizza", Password = "Benjamin", Location = "New York" },
-				new Store() { StoreID = 3, Username = "Whatever", Password = "Mario", Location = "New Mexico" }
+				new Store() { StoreID = 3, Username = "Whatever", Password = "Mario", Location = "New Mexico" },
+				new Store() { StoreID = 4, Username = "Johnny", Password = "Mario", Location = "Kalamazoo" }
 			};
 
 			builder.Entity<Store>().HasData(stores);

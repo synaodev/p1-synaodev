@@ -15,6 +15,7 @@ namespace PizzaBox.Storage.Repositories {
 				.Include(o => o.Store)
 				.Include(o => o.OrderPizzas)
 				.ThenInclude(op => op.Pizza)
+				.OrderByDescending(o => o.DateTime)
 			.ToList();
 		}
 		public override Order Get(long ID) {
@@ -26,6 +27,7 @@ namespace PizzaBox.Storage.Repositories {
 				.Include(o => o.Store)
 				.Include(o => o.OrderPizzas)
 				.ThenInclude(op => op.Pizza)
+				.OrderByDescending(o => o.DateTime)
 			.ToList();
 		}
 		public List<Order> FindByStore(Store store) {
@@ -34,6 +36,15 @@ namespace PizzaBox.Storage.Repositories {
 				.Include(o => o.User)
 				.Include(o => o.OrderPizzas)
 				.ThenInclude(op => op.Pizza)
+				.OrderByDescending(o => o.DateTime)
+			.ToList();
+		}
+		public List<Order> FindByUserAndStore(User user, Store store) {
+			return Table
+				.Where(o => o.UserID == user.UserID && o.StoreID == store.StoreID)
+				.Include(o => o.OrderPizzas)
+				.ThenInclude(op => op.Pizza)
+				.OrderByDescending(o => o.DateTime)
 			.ToList();
 		}
 	}
