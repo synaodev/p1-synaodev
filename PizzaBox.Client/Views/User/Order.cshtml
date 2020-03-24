@@ -31,6 +31,6 @@
 	<h1>Pizzas</h1>
 	<p>Price: $@Model.Cart.Sum(p => p.Price)</p>
 	@foreach (var p in @Model.Cart) {
-		<p>@p.ToString()</p>
+		<p>@p.Name</p>
 	}
 }

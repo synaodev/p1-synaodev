@@ -29,6 +29,14 @@ namespace PizzaBox.Client.Controllers {
 			}
 			return _ps.GetUser(user_id);
 		}
+		private List<Pizza> ConvertFakePizzas(List<Pizza> fake_pizzas) {
+			List<Pizza> real_pizzas = new List<Pizza>();
+			foreach (var f in fake_pizzas) {
+				Pizza r = _ps.GetPizza(f.PizzaID);
+				real_pizzas.Add(r);
+			}
+			return real_pizzas;
+		}
 		[HttpGet]
 		public IActionResult Index() {
 			User user = GetCurrentUser();
@@ -36,7 +44,11 @@ namespace PizzaBox.Client.Controllers {
 				return Redirect("/Account/Logout");
 			}
 			ViewData["Username"] = user.Username;
-			return View(new UserViewModel(_ps, user));
+			List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
+			if (cart == null) {
+				cart = new List<Pizza>();
+			}
+			return View(new UserViewModel(_ps, user, cart));
 		}
 		[HttpGet]
 		public IActionResult History() {
@@ -44,7 +56,11 @@ namespace PizzaBox.Client.Controllers {
 			if (user == null) {
 				return Redirect("/Account/Logout");
 			}
-			return View(new UserViewModel(_ps, user));
+			List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
+			if (cart == null) {
+				cart = new List<Pizza>();
+			}
+			return View(new UserViewModel(_ps, user, cart));
 		}
 		[HttpGet]
 		public IActionResult Order() {
@@ -53,11 +69,14 @@ namespace PizzaBox.Client.Controllers {
 				return Redirect("/Account/Logout");
 			}
 			List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
+			if (cart == null) {
+				cart = new List<Pizza>();
+			}
 			return View(new UserViewModel(_ps, user, cart));
 		}
 		[HttpPost]
 		public IActionResult Cart(UserViewModel uvm) {
-			Pizza pizza = _ps.GetPizza(uvm.PizzaID);
+			Pizza pizza = _ps.GetPizzaFake(uvm.PizzaID);
 			if (pizza != null) {
 				List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
 				if (cart == null) {
@@ -79,10 +98,11 @@ namespace PizzaBox.Client.Controllers {
 				return View(uvm);
 			}
 			List<Pizza> cart = SessionSerializer.FromJson<List<Pizza>>(HttpContext.Session, "Cart");
-			if (cart.Count == 0) {
+			if (cart == null || cart.Count == 0) {
 				return View(uvm);
 			}
-			if (!_ps.PostOrder(user, store, cart)) {
+			List<Pizza> real_pizzas = ConvertFakePizzas(cart);
+			if (!_ps.PostOrder(user, store, real_pizzas)) {
 				return View(uvm);
 			}
 			HttpContext.Session.Remove("Cart");

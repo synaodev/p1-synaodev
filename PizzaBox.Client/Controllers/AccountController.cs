@@ -26,13 +26,14 @@ namespace PizzaBox.Client.Controllers {
 							return Redirect("/Store/Index");
 						}
 					}
-				}
-				User user = _ps.FindUserByName(account.Username);
-				if (user != null) {
-					if (user.Password == account.Password) {
-						HttpContext.Session.SetString("AcctID", user.UserID.ToString());
-						HttpContext.Session.SetInt32("AcctAdmin", 0);
-						return Redirect("/User/Index");
+				} else {
+					User user = _ps.FindUserByName(account.Username);
+					if (user != null) {
+						if (user.Password == account.Password) {
+							HttpContext.Session.SetString("AcctID", user.UserID.ToString());
+							HttpContext.Session.SetInt32("AcctAdmin", 0);
+							return Redirect("/User/Index");
+						}
 					}
 				}
 			}

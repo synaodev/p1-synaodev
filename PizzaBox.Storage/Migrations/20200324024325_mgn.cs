@@ -152,12 +152,13 @@ namespace PizzaBox.Storage.Migrations
                 name: "OrderPizza",
                 columns: table => new
                 {
+                    OrderPizzaID = table.Column<long>(nullable: false),
                     OrderID = table.Column<long>(nullable: false),
                     PizzaID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderPizza", x => new { x.PizzaID, x.OrderID });
+                    table.PrimaryKey("PK_OrderPizza", x => x.OrderPizzaID);
                     table.ForeignKey(
                         name: "FK_OrderPizza_Orders_OrderID",
                         column: x => x.OrderID,
@@ -199,7 +200,7 @@ namespace PizzaBox.Storage.Migrations
                 {
                     { 2L, "New York", "Benjamin", "MuggyPizza" },
                     { 3L, "New Mexico", "Mario", "Whatever" },
-                    { 1L, "Albequerque", "Cadena", "EatAtJoe" }
+                    { 1L, "Albequerque", "Cadena", "Tyler" }
                 });
 
             migrationBuilder.InsertData(
@@ -207,11 +208,11 @@ namespace PizzaBox.Storage.Migrations
                 columns: new[] { "ToppingID", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 637205805393047906L, "Cheese", 0.25m },
-                    { 637205805393048334L, "Tomato Sauce", 0.75m },
-                    { 637205805393048352L, "Pepperoni", 0.50m },
-                    { 637205805393048355L, "Bacon", 0.45m },
-                    { 637205805393048358L, "Anchovies", 1.00m }
+                    { 637205966049198965L, "Cheese", 0.25m },
+                    { 637205966049199239L, "Tomato Sauce", 0.75m },
+                    { 637205966049199256L, "Pepperoni", 0.50m },
+                    { 637205966049199258L, "Bacon", 0.45m },
+                    { 637205966049199261L, "Anchovies", 1.00m }
                 });
 
             migrationBuilder.InsertData(
@@ -244,21 +245,26 @@ namespace PizzaBox.Storage.Migrations
                 columns: new[] { "PizzaID", "ToppingID" },
                 values: new object[,]
                 {
-                    { 1L, 637205805393047906L },
-                    { 1L, 637205805393048334L },
-                    { 1L, 637205805393048352L },
-                    { 2L, 637205805393047906L },
-                    { 2L, 637205805393048334L },
-                    { 2L, 637205805393048355L },
-                    { 3L, 637205805393047906L },
-                    { 3L, 637205805393048334L },
-                    { 3L, 637205805393048358L }
+                    { 1L, 637205966049198965L },
+                    { 1L, 637205966049199239L },
+                    { 1L, 637205966049199256L },
+                    { 2L, 637205966049198965L },
+                    { 2L, 637205966049199239L },
+                    { 2L, 637205966049199258L },
+                    { 3L, 637205966049198965L },
+                    { 3L, 637205966049199239L },
+                    { 3L, 637205966049199261L }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderPizza_OrderID",
                 table: "OrderPizza",
                 column: "OrderID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderPizza_PizzaID",
+                table: "OrderPizza",
+                column: "PizzaID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_StoreID",

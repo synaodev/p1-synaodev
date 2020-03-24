@@ -47,7 +47,8 @@ namespace PizzaBox.Storage.Databases {
 			builder.Entity<Order>().HasMany(o => o.OrderPizzas).WithOne(po => po.Order).HasForeignKey(po => po.OrderID);
 
 			builder.Entity<PizzaTopping>().HasKey(pt => new { pt.PizzaID, pt.ToppingID });
-			builder.Entity<OrderPizza>().HasKey(po => new { po.PizzaID, po.OrderID });
+			builder.Entity<OrderPizza>().HasKey(po => po.OrderPizzaID);
+			builder.Entity<OrderPizza>().Property(po => po.OrderPizzaID).ValueGeneratedNever();
 			builder.Entity<PizzaTopping>().HasOne(pt => pt.Pizza).WithMany(p => p.PizzaToppings).HasForeignKey(p => p.PizzaID);
 			builder.Entity<PizzaTopping>().HasOne(pt => pt.Topping).WithMany(t => t.PizzaToppings).HasForeignKey(t => t.ToppingID);
 			builder.Entity<OrderPizza>().HasOne(op => op.Order).WithMany(o => o.OrderPizzas).HasForeignKey(o => o.OrderID);
@@ -114,7 +115,7 @@ namespace PizzaBox.Storage.Databases {
 			builder.Entity<PizzaTopping>().HasData(pizzatoppings);
 
 			Store[] stores = new Store[] {
-				new Store() { StoreID = 1, Username = "EatAtJoe", Password = "Cadena", Location = "Albequerque" },
+				new Store() { StoreID = 1, Username = "Tyler", Password = "Cadena", Location = "Albequerque" },
 				new Store() { StoreID = 2, Username = "MuggyPizza", Password = "Benjamin", Location = "New York" },
 				new Store() { StoreID = 3, Username = "Whatever", Password = "Mario", Location = "New Mexico" }
 			};

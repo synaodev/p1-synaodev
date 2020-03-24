@@ -133,13 +133,13 @@ namespace PizzaBox.Storage.Services {
 					OrderID = o.OrderID,
 					PizzaID = p.PizzaID
 				});
-				if (p.OrderPizzas == null) {
+				/*if (p.OrderPizzas == null) {
 					p.OrderPizzas = new List<OrderPizza>();
 				}
 				p.OrderPizzas.Add(new OrderPizza() {
 					OrderID = o.OrderID,
 					PizzaID = p.PizzaID
-				});
+				});*/
 			}
 			return _or.Post(o, _ctx);
 		}
@@ -207,6 +207,36 @@ namespace PizzaBox.Storage.Services {
 		}
 		public List<Order> FindOrdersByStore(Store store) {
 			return _or.FindByStore(store);
+		}
+		public Pizza GetPizzaReal(long ID) {
+			List<Pizza> pizzas = this.GetPizzas();
+			return pizzas.Find(p => p.PizzaID == ID);
+		}
+		public Pizza GetPizzaFake(long ID) {
+			/*Pizza pizza = this.GetPizza(ID);
+			if (pizza == null) {
+				return null;
+			}
+			pizza.Crust = this.GetCrust(pizza.CrustID);
+			pizza.Size = this.GetSize(pizza.SizeID);
+			foreach (var pt in pizza.PizzaToppings) {
+				pt.Pizza = pizza;
+				pt.Topping = this.GetTopping(pt.ToppingID);
+			}
+			return pizza;*/
+			Pizza pizza = this.GetPizzaReal(ID);
+			pizza.Crust.Pizzas = null;
+			pizza.Size.Pizzas = null;
+			pizza.OrderPizzas = null;
+			foreach (var pt in pizza.PizzaToppings) {
+				pt.Pizza = null;
+				pt.Topping.PizzaToppings = null;
+			}
+			/*foreach (var op in pizza.OrderPizzas) {
+				op.Pizza = null;
+				op.Order.OrderPizzas = null;
+			}*/
+			return pizza;
 		}
 	}
 }
