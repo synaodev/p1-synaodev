@@ -8,3 +8,5 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR dist/
 COPY --from=build p1/out/ ./
 CMD ["dotnet", "PizzaBox.Client.dll"]
+
+
