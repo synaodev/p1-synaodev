@@ -16,7 +16,11 @@ namespace PizzaBox.Storage.Repositories {
 			return Table.SingleOrDefault(s => s.StoreID == ID);
 		}
 		public Store FindByName(string username) {
-			return Table.Where(s => s.Username == username).First();
+			IQueryable<Store> q = Table.Where(s => s.Username == username);
+			if (q.Count() == 0) {
+				return null;
+			}
+			return q.First();
 		}
 	}
 }

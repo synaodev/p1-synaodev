@@ -16,7 +16,11 @@ namespace PizzaBox.Storage.Repositories {
 			return Table.SingleOrDefault(u => u.UserID == ID);
 		}
 		public User FindByName(string username) {
-			return Table.Where(u => u.Username == username).First();
+			IQueryable<User> q = Table.Where(u => u.Username == username);
+			if (q.Count() == 0) {
+				return null;
+			}
+			return q.First();
 		}
 	}
 }
